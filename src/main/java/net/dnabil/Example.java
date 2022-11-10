@@ -10,28 +10,39 @@ public class Example {
     static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
+        // HckrankCase obj to for writing test cases into files
+        HckrankCase isOddChallange = new HckrankCase("./exampleOutput/isOdd");
 
-        HckrankCase testCase = new HckrankCase("./exampleOutput");
-        int cases[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
+        // 10 cases
+        String inputExamples = "1\n2\n3\n4\n5\n6\n7\n8\n9\n10";
+        Scanner scan = new Scanner(inputExamples);
 
-        String res = "";
-        for (int i : cases) {
-            res = soal1(i);
-            testCase.input.addLine(String.valueOf(i));
-            testCase.output.addLine(res);
+        String outputExample;
+        int userInput;
+        while (scan.hasNext()) {
+            userInput = scan.nextInt();
+            outputExample = String.format("%d is %s", userInput, isOdd(userInput) ? "odd" : "even");
 
-            System.out.println(res);
+            // using HckrankCase obj to write input & output into a file (println/printf)
+            isOddChallange.input.println(userInput);
+            isOddChallange.output.println(outputExample);
+
+            System.out.println(outputExample);
+            // creating the files needed to upload to hackerrank
             try {
-                testCase.createFile();
-            } catch (IOException e) {
+                isOddChallange.createFile();
+            } catch (Exception e) {
+                System.err.println("err: HckrankCase failed to create files");
                 e.printStackTrace();
                 System.exit(0);
             }
         }
+        scan.close();
     }
 
-    static public String soal1(int x) {
-        return String.valueOf(x + x);
+    // (challenge) algorithm to check wether a number is odd or not
+    static public boolean isOdd(int x) {
+        return x % 2 == 1;
     }
 
 }
