@@ -35,12 +35,19 @@ public class CaseFile {
         lines = new ArrayList<String>();
     }
 
-    /**
-     * Add a new line into the list with string as it's parameter.
-     * use String.valueOf or String.format inside the parameter for more flexibility
-     */
-    public void addLine(String x) {
-        lines.add(x);
+    // Printing methods
+    public void println(Object x) {
+        lines.add(x.toString());
+    }
+
+    public void printf(String format, Object... args) {
+        int lastIndex = lines.size() - 1;
+        if (lastIndex == -1) { // if lines is empty
+            lines.add("");
+            lastIndex++;
+        }
+        String temp = lines.get(lastIndex) + String.format(format, args);
+        lines.set(lastIndex, temp);
     }
 
     protected String getFileName() {
