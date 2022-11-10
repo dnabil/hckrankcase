@@ -43,7 +43,11 @@ public class CaseFile {
         lines.add(x);
     }
 
-    public String getFileName() {
+    protected String getFileName() {
+        return fileName;
+    }
+
+    public String getFormattedFileName() {
         return String.valueOf(fileName + String.format(numberFormatStr, counter) + ".txt");
     }
 
@@ -52,18 +56,18 @@ public class CaseFile {
     }
 
     void createFile(String location) throws IOException {
-        File file = new File(location + '/' + getFileName());
+        File file = new File(location + '/' + getFormattedFileName());
         file.createNewFile();
 
-        PrintWriter w = new PrintWriter(file);
-        if (lines.size() == 0) {
-            w.print("");
-        } else {
-            for (String line : lines)
-                w.println(line);
-        }
-        w.close();
-
+        if (lines.size() != 0) {
+            PrintWriter w = new PrintWriter(file);
+            for (int i = 0; i < lines.size(); i++)
+                if (i == lines.size() - 1)
+                    w.print(lines.get(i));
+                else
+                    w.println(lines.get(i));
+            w.close();
+        } // else -> there's no line to print
         addCounter(); // to make file name unique
     }
 
