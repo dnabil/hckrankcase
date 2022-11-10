@@ -54,6 +54,8 @@ public class HckrankCase {
     public void createFile() throws IOException {
         String inputDir = String.format("%s/%s", this.location, input.getFileName());
         String outputDir = String.format("%s/%s", this.location, output.getFileName());
+        new File(inputDir).mkdirs();
+        new File(outputDir).mkdirs();
         input.createFile(inputDir);
         output.createFile(outputDir);
 
